@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaSWriter v2 — Liquid Obsidian / Centered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --green: #4ade80;
+  --green-dim: rgba(74, 222, 128, 0.15);
+  --green-border: rgba(74, 222, 128, 0.2);
+  --green-glow: rgba(74, 222, 128, 0.08);
+  --white: #ffffff;
+  --white-60: rgba(255,255,255,0.6);
+  --white-40: rgba(255,255,255,0.4);
+  --white-20: rgba(255,255,255,0.2);
+  --white-10: rgba(255,255,255,0.1);
+  --white-06: rgba(255,255,255,0.06);
+  --white-04: rgba(255,255,255,0.04);
+  --white-03: rgba(255,255,255,0.03);
+  --bg: #050505;
+  --surface: #0a0a0a;
+  --surface-2: #0f0f0f;
+  --border: rgba(255,255,255,0.07);
+  --mono: 'DM Mono', monospace;
+  --sans: 'Inter', sans-serif;
+  --display: 'Syne', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── BACKGROUND ── */
+.bg-glow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% -5%, rgba(74,222,128,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 30% 30% at 15% 60%, rgba(74,222,128,0.03) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 85% 40%, rgba(74,222,128,0.02) 0%, transparent 60%);
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 40px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(5,5,5,0.7);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: var(--display);
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+nav { display: flex; gap: 4px; }
+nav a {
+  font-size: 13px; font-weight: 500;
+  color: var(--white-40); text-decoration: none;
+  padding: 6px 14px; border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+nav a:hover { color: var(--white); background: var(--white-06); }
+.btn-nav {
+  background: var(--green); color: #000;
+  border: none; border-radius: 7px;
+  padding: 7px 16px; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+  font-family: var(--sans);
+}
+.btn-nav:hover { background: #86efac; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 160px 24px 80px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  border-radius: 20px; padding: 5px 14px 5px 10px;
+  font-size: 12px; font-family: var(--mono);
+  color: var(--green); letter-spacing: 0.04em;
+  margin-bottom: 36px;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+h1 {
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  color: var(--white);
+  max-width: 780px;
+  margin-bottom: 24px;
+}
+h1 em {
+  font-style: normal;
+  color: var(--green);
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--white-40);
+  line-height: 1.65;
+  max-width: 520px;
+  margin-bottom: 48px;
+  font-weight: 400;
+}
+
+/* Email CTA */
+.cta-form {
+  display: flex; gap: 0;
+  width: 100%; max-width: 440px;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px var(--green-border),
+    0 20px 60px rgba(0,0,0,0.5);
+  margin-bottom: 14px;
+  transition: box-shadow 0.2s;
+}
+.cta-form:focus-within {
+  box-shadow: 0 0 0 1px rgba(74,222,128,0.4), 0 20px 60px rgba(0,0,0,0.5);
+}
+.cta-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  padding: 14px 18px; font-size: 14px; color: var(--white);
+  font-family: var(--sans);
+}
+.cta-input::placeholder { color: var(--white-20); }
+.cta-btn {
+  background: var(--green); color: #000;
+  border: none; padding: 14px 22px;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; white-space: nowrap;
+  font-family: var(--sans); transition: background 0.15s;
+}
+.cta-btn:hover { background: #86efac; }
+.cta-hint {
+  font-size: 12px; color: var(--white-20);
+  font-family: var(--mono);
+}
+
+/* Content types pills */
+.types-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 48px; max-width: 640px;
+}
+.type-pill {
+  background: var(--white-04);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 12px;
+  font-size: 12px; color: var(--white-40);
+  font-family: var(--mono);
+  transition: all 0.15s;
+  cursor: default;
+}
+.type-pill:hover { background: var(--green-dim); border-color: var(--green-border); color: var(--green); }
+
+/* ── PRODUCT MOCKUP ── */
+.mockup-wrap {
+  position: relative; z-index: 1;
+  padding: 0 24px 120px;
+  display: flex; justify-content: center;
+}
+.mockup-outer {
+  width: 100%; max-width: 960px;
+  position: relative;
+}
+/* Glow under the mockup */
+.mockup-outer::before {
+  content: '';
+  position: absolute; bottom: -60px; left: 10%; right: 10%; height: 120px;
+  background: radial-gradient(ellipse, rgba(74,222,128,0.12) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.mockup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px var(--green-border);
+}
+/* Title bar */
+.mockup-bar {
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.traffic-lights { display: flex; gap: 6px; }
+.tl { width: 10px; height: 10px; border-radius: 50%; }
+.url-bar {
+  flex: 1; background: var(--white-04);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 12px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--white-20); max-width: 280px; margin: 0 auto;
+  display: flex; align-items: center; gap: 6px;
+}
+.url-bar-lock { color: var(--green); font-size: 10px; }
+
+/* App shell */
+.app-shell {
+  display: grid;
+  grid-template-columns: 200px 1fr 280px;
+  min-height: 420px;
+}
+/* Left sidebar */
+.app-sidebar {
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+  padding: 20px 14px;
+}
+.sidebar-section-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--white-20); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 8px; padding: 0 6px;
+}
+.sidebar-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px; border-radius: 6px;
+  font-size: 12px; color: var(--white-40);
+  cursor: pointer; margin-bottom: 2px;
+  transition: all 0.15s;
+}
+.sidebar-item:hover { background: var(--white-04); color: var(--white-60); }
+.sidebar-item.active {
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+}
+.si-icon {
+  width: 14px; height: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  opacity: 0.7;
+}
+.sidebar-divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+/* Main editor */
+.app-main { padding: 28px 32px; position: relative; }
+.editor-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.editor-breadcrumb {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--white-20);
+  display: flex; align-items: center; gap: 6px;
+}
+.editor-breadcrumb span { color: var(--white-40); }
+.editor-actions { display: flex; gap: 8px; }
+.ea-btn {
+  background: var(--white-04); border: 1px solid var(--border);
+  border-radius: 5px; padding: 5px 10px;
+  font-size: 11px; color: var(--white-40);
+  cursor: pointer; font-family: var(--mono);
+}
+.ea-btn.green { background: var(--green-dim); border-color: var(--green-border); color: var(--green); }
+
+/* Copy blocks */
+.copy-block { margin-bottom: 20px; }
+.cb-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--white-20); text-transform: uppercase; letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+.cb-headline {
+  font-family: var(--display);
+  font-size: 20px; font-weight: 800; color: var(--white);
+  line-height: 1.1; letter-spacing: -0.02em;
+  position: relative;
+}
+.cb-headline .cursor {
+  display: inline-block; width: 2px; height: 20px;
+  background: var(--green); animation: blink 1s infinite;
+  vertical-align: middle; margin-left: 2px;
+  box-shadow: 0 0 6px var(--green);
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cb-body {
+  font-size: 13px; color: var(--white-40);
+  line-height: 1.65;
+}
+.cb-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green); color: #000;
+  border-radius: 6px; padding: 7px 14px;
+  font-size: 12px; font-weight: 700;
+}
+.cb-cta-ghost {
+  display: inline-flex; align-items: center;
+  background: transparent; color: var(--white-40);
+  border: 1px solid var(--border);
+  border-radius: 6px; padding: 7px 14px;
+  font-size: 12px; margin-left: 8px;
+}
+
+/* Right panel — config */
+.app-panel {
+  background: var(--surface-2);
+  border-left: 1px solid var(--border);
+  padding: 20px 16px;
+  font-size: 12px;
+}
+.panel-title {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--white-20); letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.panel-field { margin-bottom: 14px; }
+.pf-label { font-size: 11px; color: var(--white-40); margin-bottom: 5px; }
+.pf-value {
+  background: var(--white-04); border: 1px solid var(--border);
+  border-radius: 5px; padding: 6px 10px;
+  font-size: 12px; color: var(--white-60);
+}
+.pf-select {
+  background: var(--white-04); border: 1px solid var(--border);
+  border-radius: 5px; padding: 6px 10px;
+  font-size: 12px; color: var(--green);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-divider { height: 1px; background: var(--border); margin: 16px 0; }
+.quality-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.quality-label { font-size: 11px; color: var(--white-40); }
+.quality-badge {
+  font-family: var(--mono); font-size: 10px;
+  padding: 2px 7px; border-radius: 3px;
+}
+.quality-badge.green { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-border); }
+.quality-badge.gray { background: var(--white-04); color: var(--white-40); border: 1px solid var(--border); }
+.quality-bar {
+  height: 3px; background: var(--white-06); border-radius: 2px;
+  margin-bottom: 8px; overflow: hidden;
+}
+.quality-fill { height: 100%; border-radius: 2px; }
+.fill-green { background: var(--green); width: 92%; }
+.fill-med { background: rgba(74,222,128,0.5); width: 78%; }
+.fill-low { background: rgba(74,222,128,0.3); width: 61%; }
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  position: relative; z-index: 1;
+  padding: 40px 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  background: linear-gradient(180deg, transparent, rgba(74,222,128,0.015), transparent);
+}
+.trust-label {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--white-20); letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.logo-strip {
+  display: flex; gap: 40px; justify-content: center;
+  align-items: center; flex-wrap: wrap;
+}
+.logo-co {
+  font-family: var(--display); font-size: 15px; font-weight: 800;
+  color: var(--white-20); letter-spacing: -0.02em;
+  transition: color 0.2s;
+}
+.logo-co:hover { color: var(--white-40); }
+
+/* ── HOW IT WORKS ── */
+.section {
+  position: relative; z-index: 1;
+  padding: 100px 24px;
+  max-width: 1040px; margin: 0 auto;
+}
+.section-eyebrow {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--green); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--white); margin-bottom: 14px;
+}
+.section-sub {
+  font-size: 16px; color: var(--white-40); line-height: 1.6;
+  max-width: 460px; margin-bottom: 60px;
+}
+/* Steps */
+.steps {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+  background: var(--border); border-radius: 14px; overflow: hidden;
+}
+.step {
+  background: var(--surface); padding: 36px 32px;
+  position: relative;
+}
+.step-num {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--green); letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+.step-title {
+  font-family: var(--display); font-size: 18px; font-weight: 800;
+  color: var(--white); margin-bottom: 10px; letter-spacing: -0.02em;
+}
+.step-desc { font-size: 14px; color: var(--white-40); line-height: 1.6; }
+.step-tag {
+  display: inline-block; margin-top: 16px;
+  font-family: var(--mono); font-size: 11px;
+  color: var(--green); background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  border-radius: 4px; padding: 3px 8px;
+}
+
+/* ── DIFFERENTIATORS ── */
+.diff-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+  background: var(--border); border-radius: 14px; overflow: hidden;
+}
+.diff-item {
+  background: var(--surface); padding: 32px;
+  transition: background 0.15s;
+}
+.diff-item:hover { background: var(--surface-2); }
+.diff-icon {
+  font-size: 22px; margin-bottom: 14px;
+}
+.diff-title {
+  font-family: var(--display); font-size: 16px; font-weight: 800;
+  color: var(--white); margin-bottom: 8px; letter-spacing: -0.02em;
+}
+.diff-desc { font-size: 13px; color: var(--white-40); line-height: 1.65; }
+.diff-vs {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px;
+  font-family: var(--mono); font-size: 11px;
+}
+.diff-vs .bad { color: rgba(239,68,68,0.7); text-decoration: line-through; }
+.diff-vs .sep { color: var(--white-20); }
+.diff-vs .good { color: var(--green); }
+
+/* ── TESTIMONIALS ── */
+.testimonials {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-top: 16px;
+}
+.testi {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px;
+  transition: border-color 0.15s;
+}
+.testi:hover { border-color: var(--green-border); }
+.testi-quote {
+  font-size: 14px; color: var(--white-60); line-height: 1.65;
+  margin-bottom: 20px; font-style: italic;
+}
+.testi-author { display: flex; align-items: center; gap: 10px; }
+.testi-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: var(--green);
+  font-family: var(--display);
+}
+.testi-name { font-size: 13px; font-weight: 600; color: var(--white); }
+.testi-role { font-size: 11px; color: var(--white-40); }
+
+/* ── FINAL CTA ── */
+.final-cta {
+  position: relative; z-index: 1;
+  padding: 100px 24px 120px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+.cta-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 72px 60px;
+  max-width: 680px; width: 100%;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 0 1px var(--green-border), 0 40px 80px rgba(0,0,0,0.6);
+}
+.cta-card::before {
+  content: '';
+  position: absolute; top: -1px; left: 15%; right: 15%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity: 0.5;
+}
+.cta-card::after {
+  content: '';
+  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 200px;
+  background: radial-gradient(ellipse, rgba(74,222,128,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-title {
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--white); margin-bottom: 14px;
+}
+.cta-title em { font-style: normal; color: var(--green); }
+.cta-sub {
+  font-size: 16px; color: var(--white-40);
+  line-height: 1.6; margin-bottom: 36px;
+}
+.cta-form-lg {
+  display: flex; gap: 0;
+  max-width: 400px; margin: 0 auto 12px;
+  background: var(--bg);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 0 0 1px var(--green-border);
+}
+.cta-form-lg:focus-within {
+  box-shadow: 0 0 0 1px rgba(74,222,128,0.5);
+}
+.cta-input-lg {
+  flex: 1; background: transparent; border: none; outline: none;
+  padding: 14px 16px; font-size: 14px; color: var(--white);
+  font-family: var(--sans);
+}
+.cta-input-lg::placeholder { color: var(--white-20); }
+.cta-btn-lg {
+  background: var(--green); color: #000;
+  border: none; padding: 14px 20px;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: var(--sans); transition: background 0.15s;
+}
+.cta-btn-lg:hover { background: #86efac; }
+.cta-footnote { font-family: var(--mono); font-size: 11px; color: var(--white-20); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo {
+  font-family: var(--display); font-size: 14px; font-weight: 800;
+  color: var(--white-40); letter-spacing: -0.02em;
+}
+.footer-copy { font-family: var(--mono); font-size: 11px; color: var(--white-20); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a {
+  font-size: 12px; color: var(--white-20); text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--white-40); }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    SaaSWriter
+  </div>
+  <nav>
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+  </nav>
+  <button class="btn-nav">Get early access</button>
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <div class="badge-dot"></div>
+    Early access · Free during beta
+  </div>
+  <h1>The AI copywriter<br>built for <em>SaaS</em></h1>
+  <p class="hero-sub">Stop getting generic output from generic AI. SaaSWriter knows how SaaS buyers think, how SaaS products sell, and what makes SaaS copy convert.</p>
+
+  <form class="cta-form" onsubmit="return false">
+    <input class="cta-input" type="email" placeholder="you@yourcompany.com" autocomplete="email">
+    <button class="cta-btn">Get access →</button>
+  </form>
+  <div class="cta-hint">// free_during_beta · no_card_required</div>
+
+  <div class="types-row">
+    <span class="type-pill">landing_pages</span>
+    <span class="type-pill">email_sequences</span>
+    <span class="type-pill">linkedin_posts</span>
+    <span class="type-pill">case_studies</span>
+    <span class="type-pill">ad_copy</span>
+    <span class="type-pill">blog_posts</span>
+    <span class="type-pill">changelogs</span>
+    <span class="type-pill">onboarding_copy</span>
+  </div>
+</section>
+
+
+<!-- PRODUCT MOCKUP -->
+<div class="mockup-wrap">
+  <div class="mockup-outer">
+    <div class="mockup">
+      <!-- Browser chrome -->
+      <div class="mockup-bar">
+        <div class="traffic-lights">
+          <div class="tl" style="background:#ff5f56"></div>
+          <div class="tl" style="background:#febc2e"></div>
+          <div class="tl" style="background:#27c93f"></div>
+        </div>
+        <div class="url-bar">
+          <span class="url-bar-lock">🔒</span>
+          app.saaswriter.app
+        </div>
+      </div>
+
+      <!-- App UI -->
+      <div class="app-shell">
+        <!-- Left sidebar -->
+        <div class="app-sidebar">
+          <div class="sidebar-section-label">Content type</div>
+          <div class="sidebar-item active">
+            <span class="si-icon">🏠</span> Hero copy
+          </div>
+          <div class="sidebar-item">
+            <span class="si-icon">✉️</span> Email sequence
+          </div>
+          <div class="sidebar-item">
+            <span class="si-icon">💼</span> LinkedIn post
+          </div>
+          <div class="sidebar-item">
+            <span class="si-icon">📖</span> Case study
+          </div>
+          <div class="sidebar-item">
+            <span class="si-icon">🎯</span> Ad copy
+          </div>
+          <div class="sidebar-divider"></div>
+          <div class="sidebar-section-label">Recent</div>
+          <div class="sidebar-item">
+            <span class="si-icon" style="opacity:0.4">↩</span> Drip email #3
+          </div>
+          <div class="sidebar-item">
+            <span class="si-icon" style="opacity:0.4">↩</span> G2 review ask
+          </div>
+        </div>
+
+        <!-- Main editor -->
+        <div class="app-main">
+          <div class="editor-topbar">
+            <div class="editor-breadcrumb">Hero copy <span>›</span> LinearB</div>
+            <div class="editor-actions">
+              <div class="ea-btn">Regenerate</div>
+              <div class="ea-btn">Variants</div>
+              <div class="ea-btn green">Copy ↗</div>
+            </div>
+          </div>
+
+          <div class="copy-block">
+            <div class="cb-label">Headline</div>
+            <div class="cb-headline">
+              Ship 40% Faster Without the Burnout<span class="cursor"></span>
+            </div>
+          </div>
+          <div class="copy-block">
+            <div class="cb-label">Subheadline</div>
+            <div class="cb-body">LinearB gives engineering teams the metrics to improve velocity without micromanagement. See exactly where work is slowing down — and fix it before the sprint becomes a miss.</div>
+          </div>
+          <div class="copy-block">
+            <div class="cb-label">CTA</div>
+            <span class="cb-cta">Start free →</span>
+            <span class="cb-cta-ghost">No credit card required</span>
+          </div>
+        </div>
+
+        <!-- Right config panel -->
+        <div class="app-panel">
+          <div class="panel-title">Copy config</div>
+          <div class="panel-field">
+            <div class="pf-label">Product</div>
+            <div class="pf-value">LinearB</div>
+          </div>
+          <div class="panel-field">
+            <div class="pf-label">Motion</div>
+            <div class="pf-select">PLG — product-led <span>›</span></div>
+          </div>
+          <div class="panel-field">
+            <div class="pf-label">Audience</div>
+            <div class="pf-select">Engineering leaders <span>›</span></div>
+          </div>
+          <div class="panel-field">
+            <div class="pf-label">Tone</div>
+            <div class="pf-select">Direct · Confident <span>›</span></div>
+          </div>
+          <div class="panel-divider"></div>
+          <div class="panel-title">Quality signals</div>
+          <div class="quality-row">
+            <span class="quality-label">SaaS-native</span>
+            <span class="quality-badge green">92</span>
+          </div>
+          <div class="quality-bar"><div class="quality-fill fill-green"></div></div>
+          <div class="quality-row">
+            <span class="quality-label">Pain-first</span>
+            <span class="quality-badge green">78</span>
+          </div>
+          <div class="quality-bar"><div class="quality-fill fill-med"></div></div>
+          <div class="quality-row">
+            <span class="quality-label">Specificity</span>
+            <span class="quality-badge gray">61</span>
+          </div>
+          <div class="quality-bar"><div class="quality-fill fill-low"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-label">Trusted by teams building SaaS</div>
+  <div class="logo-strip">
+    <span class="logo-co">Acme</span>
+    <span class="logo-co">Lumio</span>
+    <span class="logo-co">Forge</span>
+    <span class="logo-co">Clearpath</span>
+    <span class="logo-co">Vela</span>
+    <span class="logo-co">Stealth</span>
+  </div>
+</div>
+
+
+<!-- HOW IT WORKS -->
+<div class="section" id="how">
+  <div class="section-eyebrow">// How it works</div>
+  <h2 class="section-title">From brief to copy<br>in three steps</h2>
+  <p class="section-sub">No prompting, no fiddling. Tell SaaSWriter what you need and get copy ready to ship.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01 —</div>
+      <div class="step-title">Pick your content type</div>
+      <div class="step-desc">Choose from 12+ content types built for SaaS — hero copy, email sequences, case studies, ads, and more.</div>
+      <span class="step-tag">12+ types</span>
+    </div>
+    <div class="step">
+      <div class="step-num">02 —</div>
+      <div class="step-title">Brief your product</div>
+      <div class="step-desc">Tell us your product, audience, motion (PLG/SLG), and tone. The agent handles the rest — no prompt engineering needed.</div>
+      <span class="step-tag">SaaS-native context</span>
+    </div>
+    <div class="step">
+      <div class="step-num">03 —</div>
+      <div class="step-title">Get copy that converts</div>
+      <div class="step-desc">Receive multiple variants, quality-scored against SaaS conversion frameworks. Copy, edit, ship.</div>
+      <span class="step-tag">Variants + scores</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- DIFFERENTIATORS -->
+<div class="section" id="features">
+  <div class="section-eyebrow">// Why SaaSWriter</div>
+  <h2 class="section-title">Built for SaaS.<br>Not everything.</h2>
+  <p class="section-sub">Generic AI writes generic copy. SaaSWriter is trained on what actually works in SaaS.</p>
+
+  <div class="diff-grid">
+    <div class="diff-item">
+      <div class="diff-icon">🎯</div>
+      <div class="diff-title">Knows PLG vs SLG</div>
+      <div class="diff-desc">Understands the difference between product-led and sales-led copy — and writes accordingly. No more "Book a demo" on a self-serve tool.</div>
+      <div class="diff-vs">
+        <span class="bad">Generic AI</span>
+        <span class="sep">→</span>
+        <span class="good">Motion-aware copy</span>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">💬</div>
+      <div class="diff-title">Speaks SaaS buyer language</div>
+      <div class="diff-desc">Trained on the terms, pains, and objections real SaaS buyers have. No filler phrases, no corporate speak.</div>
+      <div class="diff-vs">
+        <span class="bad">Robotic output</span>
+        <span class="sep">→</span>
+        <span class="good">Sounds like you</span>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">⚡</div>
+      <div class="diff-title">Pain-first frameworks</div>
+      <div class="diff-desc">Every piece of copy leads with the buyer's pain, not your features. Proven conversion frameworks baked in — not prompts you have to find yourself.</div>
+      <div class="diff-vs">
+        <span class="bad">Feature-first copy</span>
+        <span class="sep">→</span>
+        <span class="good">Pain-first structure</span>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-icon">🔁</div>
+      <div class="diff-title">Full content system</div>
+      <div class="diff-desc">One tool for your entire SaaS content stack. Landing pages, emails, LinkedIn, ads, case studies — consistent voice across all channels.</div>
+      <div class="diff-vs">
+        <span class="bad">12 different tools</span>
+        <span class="sep">→</span>
+        <span class="good">One system</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- TESTIMONIALS -->
+<div class="section">
+  <div class="section-eyebrow">// What people say</div>
+  <h2 class="section-title">Early users</h2>
+  <div class="testimonials">
+    <div class="testi">
+      <div class="testi-quote">"Finally an AI that doesn't write copy that sounds like a corporate press release. The PLG/SLG awareness alone is worth it."</div>
+      <div class="testi-author">
+        <div class="testi-avatar">AK</div>
+        <div>
+          <div class="testi-name">Alex K.</div>
+          <div class="testi-role">Head of Marketing · Series B SaaS</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="testi-quote">"I used to spend half a day on a single email sequence. Now it's 20 minutes — and I'm actually editing, not rewriting from scratch."</div>
+      <div class="testi-author">
+        <div class="testi-avatar">SR</div>
+        <div>
+          <div class="testi-name">Sara R.</div>
+          <div class="testi-role">Content Lead · PLG startup</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="testi-quote">"As a solo founder doing my own marketing, this is like having a senior copywriter on retainer. Except it doesn't cost $300/hr."</div>
+      <div class="testi-author">
+        <div class="testi-avatar">JM</div>
+        <div>
+          <div class="testi-name">James M.</div>
+          <div class="testi-role">Founder · B2B SaaS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- FINAL CTA -->
+<div class="final-cta" id="pricing">
+  <div class="cta-card">
+    <div class="section-eyebrow" style="margin-bottom:12px">// Early access</div>
+    <div class="cta-title">Start writing <em>SaaS copy</em><br>that converts</div>
+    <p class="cta-sub">Free during beta. No credit card. Cancel any time — though you won't want to.</p>
+    <form class="cta-form-lg" onsubmit="return false">
+      <input class="cta-input-lg" type="email" placeholder="you@yourcompany.com" autocomplete="email">
+      <button class="cta-btn-lg">Get access →</button>
+    </form>
+    <div class="cta-footnote">// 500 spots remaining</div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SaaSWriter</div>
+  <div class="footer-copy">© 2025 SaaSWriter · saaswriter.app</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

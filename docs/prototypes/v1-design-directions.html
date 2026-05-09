@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaSWriter — Design Directions v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+
+/* ─── NAV ─────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  padding: 12px 24px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+nav a {
+  color: rgba(255,255,255,0.5); text-decoration: none;
+  font-size: 13px; font-weight: 500; padding: 6px 14px;
+  border-radius: 20px; transition: all 0.2s;
+}
+nav a:hover, nav a.active { color: #fff; background: rgba(255,255,255,0.1); }
+nav .label { color: rgba(255,255,255,0.3); font-size: 12px; margin-right: 8px; }
+
+/* ═══════════════════════════════════════════════════════
+   DIRECTION A — ELECTRIC VOID
+   Deep black, electric blue glow, ultra-precise
+═══════════════════════════════════════════════════════ */
+#dir-a {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0, 100, 255, 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0, 60, 200, 0.1) 0%, transparent 60%),
+    #030308;
+  padding: 100px 24px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.dir-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 60px;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 6px 16px; border-radius: 4px;
+}
+
+/* Glass card — Direction A */
+.glass-a {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  backdrop-filter: blur(40px);
+  box-shadow:
+    0 0 0 1px rgba(0, 120, 255, 0.15),
+    0 40px 80px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  max-width: 900px; width: 100%;
+  padding: 80px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.glass-a::before {
+  content: '';
+  position: absolute; top: -1px; left: 20%; right: 20%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 140, 255, 0.6), transparent);
+}
+.glass-a::after {
+  content: '';
+  position: absolute;
+  top: -200px; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(0, 100, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.badge-a {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0, 100, 255, 0.1);
+  border: 1px solid rgba(0, 140, 255, 0.25);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; color: #60a5fa;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.05em;
+  margin-bottom: 32px;
+}
+.badge-a .dot { width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; animation: pulse-a 2s infinite; }
+@keyframes pulse-a { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.h1-a {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #ffffff 0%, #93c5fd 50%, #60a5fa 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.sub-a {
+  font-size: 18px; color: rgba(255,255,255,0.5);
+  line-height: 1.6; max-width: 520px; margin: 0 auto 40px;
+}
+.cta-row-a { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 60px; }
+.btn-primary-a {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 14px 28px; font-size: 15px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.4), 0 4px 12px rgba(0,0,0,0.4);
+  transition: all 0.2s;
+}
+.btn-primary-a:hover { box-shadow: 0 0 50px rgba(37, 99, 235, 0.6), 0 4px 16px rgba(0,0,0,0.5); transform: translateY(-1px); }
+.btn-ghost-a {
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px; padding: 14px 28px;
+  font-size: 15px; font-weight: 500; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-ghost-a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+/* Feature pills A */
+.features-a { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.pill-a {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 8px 14px;
+  font-size: 13px; color: rgba(255,255,255,0.5);
+  font-family: 'DM Mono', monospace;
+}
+
+/* Screen mockup A */
+.screen-a {
+  width: 100%; max-width: 860px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  margin-top: 60px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+}
+.screen-topbar-a {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.dot-a { width: 10px; height: 10px; border-radius: 50%; }
+.screen-body-a { padding: 24px; display: grid; grid-template-columns: 220px 1fr; gap: 16px; min-height: 300px; }
+.sidebar-a {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 16px;
+}
+.sidebar-item-a {
+  padding: 8px 10px; border-radius: 6px;
+  font-size: 12px; color: rgba(255,255,255,0.4);
+  margin-bottom: 4px; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+}
+.sidebar-item-a.active-a { background: rgba(37,99,235,0.15); color: #93c5fd; }
+.sidebar-item-a .icon-a { width: 14px; height: 14px; border-radius: 3px; background: currentColor; opacity: 0.4; }
+.editor-a {
+  background: rgba(255,255,255,0.015);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px; padding: 20px;
+}
+.editor-type-a {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: #3b82f6; margin-bottom: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.editor-headline-a { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 8px; }
+.editor-body-a { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+.cursor-a {
+  display: inline-block; width: 2px; height: 14px;
+  background: #3b82f6; animation: blink 1s infinite; vertical-align: middle;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+
+/* ═══════════════════════════════════════════════════════
+   DIRECTION B — AURORA GLASS
+   Deep navy, purple-to-cyan aurora, warm glass
+═══════════════════════════════════════════════════════ */
+#dir-b {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 70% 50% at 30% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 75% 70%, rgba(6, 182, 212, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgba(0,0,0,0) 0%, #020212 80%),
+    #020212;
+  padding: 100px 24px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.glass-b {
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 28px;
+  backdrop-filter: blur(60px) saturate(1.5);
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.12),
+    0 60px 120px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+  max-width: 900px; width: 100%;
+  padding: 80px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.glass-b::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(139,92,246,0.05) 0%, rgba(6,182,212,0.03) 100%);
+  border-radius: 28px;
+  pointer-events: none;
+}
+.badge-b {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(6,182,212,0.15));
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 12px; font-weight: 500;
+  color: #c4b5fd;
+  margin-bottom: 32px;
+}
+.badge-b span { color: #22d3ee; }
+.h1-b {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+.h1-b-white { color: #fff; }
+.h1-b-grad {
+  background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.sub-b {
+  font-size: 18px; color: rgba(255,255,255,0.55);
+  line-height: 1.7; max-width: 540px; margin: 0 auto 44px;
+  font-weight: 400;
+}
+.input-row-b {
+  display: flex; gap: 0; max-width: 480px; margin: 0 auto 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(139,92,246,0.1);
+}
+.input-b {
+  flex: 1; background: transparent; border: none; outline: none;
+  padding: 14px 20px; font-size: 15px; color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+.input-b::placeholder { color: rgba(255,255,255,0.3); }
+.btn-b {
+  background: linear-gradient(135deg, #7c3aed, #0e7490);
+  color: #fff; border: none; padding: 14px 24px;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-b:hover { opacity: 0.9; }
+.hint-b { font-size: 12px; color: rgba(255,255,255,0.3); margin-bottom: 56px; }
+
+/* Use cases B */
+.use-cases-b {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  width: 100%;
+}
+.uc-b {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 16px;
+  text-align: left; transition: all 0.2s;
+}
+.uc-b:hover { border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.05); }
+.uc-icon-b {
+  font-size: 20px; margin-bottom: 8px;
+}
+.uc-title-b { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+.uc-desc-b { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.4; }
+
+/* Aurora decoration */
+.aurora-b {
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 400px; pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 60% at 30%, rgba(139,92,246,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 70%, rgba(6,182,212,0.12) 0%, transparent 70%);
+}
+
+/* ═══════════════════════════════════════════════════════
+   DIRECTION C — LIQUID OBSIDIAN
+   Pure black, acid green accent, brutalist precision
+═══════════════════════════════════════════════════════ */
+#dir-c {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(74, 222, 128, 0.06) 0%, transparent 70%),
+    #050505;
+  padding: 100px 24px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.glass-c {
+  max-width: 900px; width: 100%;
+  position: relative;
+}
+/* Split layout for C */
+.c-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.06); border-radius: 20px; overflow: hidden; }
+.c-left {
+  background: #0a0a0a;
+  padding: 60px 48px;
+  position: relative;
+}
+.c-right {
+  background: #0d0d0d;
+  padding: 60px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.c-left::before {
+  content: '';
+  position: absolute; bottom: 0; right: -1px; top: 0; width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(74,222,128,0.4), transparent);
+}
+.badge-c {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 4px; padding: 4px 10px;
+  font-size: 11px; font-family: 'DM Mono', monospace;
+  color: #4ade80; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.h1-c {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.h1-c em { font-style: normal; color: #4ade80; }
+.sub-c {
+  font-size: 15px; color: rgba(255,255,255,0.4);
+  line-height: 1.7; margin-bottom: 36px;
+}
+.btn-c {
+  background: #4ade80; color: #000;
+  border: none; border-radius: 6px;
+  padding: 13px 24px; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+  font-family: 'Inter', sans-serif;
+  display: inline-block;
+}
+.btn-c:hover { background: #86efac; }
+.btn-ghost-c {
+  background: transparent; color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+  padding: 12px 24px; font-size: 14px; font-weight: 500;
+  cursor: pointer; margin-left: 12px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+}
+.btn-ghost-c:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
+/* Terminal-style copy output */
+.terminal-c {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px; overflow: hidden;
+}
+.terminal-header-c {
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.terminal-dot-c { width: 8px; height: 8px; border-radius: 50%; }
+.terminal-body-c { padding: 20px; font-family: 'DM Mono', monospace; }
+.t-prompt { font-size: 11px; color: #4ade80; margin-bottom: 12px; }
+.t-label { font-size: 10px; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.t-copy { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 16px; font-family: 'Inter', sans-serif; }
+.t-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+.t-tag { font-size: 10px; color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); border-radius: 3px; padding: 3px 8px; font-family: 'DM Mono', monospace; }
+.t-tag.green { color: #4ade80; background: rgba(74,222,128,0.08); }
+
+/* Metrics row C */
+.metrics-c { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+.metric-c {
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 16px;
+  text-align: center;
+}
+.metric-num-c { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #4ade80; }
+.metric-label-c { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="label">SaaSWriter v1</span>
+  <a href="#dir-a" class="active">A: Electric Void</a>
+  <a href="#dir-b">B: Aurora Glass</a>
+  <a href="#dir-c">C: Liquid Obsidian</a>
+</nav>
+
+
+<!-- ═══════════════ DIRECTION A: ELECTRIC VOID ═══════════════ -->
+<section id="dir-a">
+  <div class="dir-label">Direction A — Electric Void &nbsp;·&nbsp; Deep black · Electric blue · Precision</div>
+
+  <div class="glass-a">
+    <div class="badge-a"><span class="dot"></span> AI Agent · SaaS Copy</div>
+    <h1 class="h1-a">Your AI Copywriter<br>Built for SaaS</h1>
+    <p class="sub-a">Stop wrestling with generic AI output. SaaSWriter knows SaaS — landing pages, email sequences, ads, and more. Copy that actually converts.</p>
+    <div class="cta-row-a">
+      <button class="btn-primary-a">Get Early Access →</button>
+      <button class="btn-ghost-a">See examples</button>
+    </div>
+    <div class="features-a">
+      <span class="pill-a">Landing pages</span>
+      <span class="pill-a">Email sequences</span>
+      <span class="pill-a">LinkedIn posts</span>
+      <span class="pill-a">Case studies</span>
+      <span class="pill-a">Ads copy</span>
+      <span class="pill-a">Blog posts</span>
+    </div>
+  </div>
+
+  <!-- App mockup -->
+  <div class="screen-a">
+    <div class="screen-topbar-a">
+      <div class="dot-a" style="background:#ff5f56"></div>
+      <div class="dot-a" style="background:#febc2e"></div>
+      <div class="dot-a" style="background:#27c93f"></div>
+      <span style="font-size:12px;color:rgba(255,255,255,0.2);margin-left:12px;font-family:'DM Mono',monospace">saaswriter.app</span>
+    </div>
+    <div class="screen-body-a">
+      <div class="sidebar-a">
+        <div style="font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;font-family:'DM Mono',monospace">Content types</div>
+        <div class="sidebar-item-a active-a"><span class="icon-a"></span> Hero copy</div>
+        <div class="sidebar-item-a"><span class="icon-a"></span> Email sequence</div>
+        <div class="sidebar-item-a"><span class="icon-a"></span> LinkedIn post</div>
+        <div class="sidebar-item-a"><span class="icon-a"></span> Case study</div>
+        <div class="sidebar-item-a"><span class="icon-a"></span> Google Ad</div>
+        <div class="sidebar-item-a"><span class="icon-a"></span> Blog post</div>
+        <div class="sidebar-item-a"><span class="icon-a"></span> Changelog</div>
+      </div>
+      <div class="editor-a">
+        <div class="editor-type-a">Hero Copy · Landing Page</div>
+        <div class="editor-headline-a">The Analytics Platform That Pays for Itself in 30 Days<span class="cursor-a"></span></div>
+        <div class="editor-body-a">
+          Stop losing revenue to decisions made on gut feeling. Amplitude gives B2B SaaS teams the product intelligence to ship features users actually want — and retire the ones they don't.<br><br>
+          Join 1,800+ product teams who cut churn by 40% in their first quarter.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ DIRECTION B: AURORA GLASS ═══════════════ -->
+<section id="dir-b">
+  <div class="dir-label">Direction B — Aurora Glass &nbsp;·&nbsp; Navy · Purple-to-cyan · Warm glass</div>
+
+  <div class="glass-b">
+    <div class="aurora-b"></div>
+
+    <div class="badge-b">AI Writing Agent · <span>Early Access Open</span></div>
+    <h1 class="h1-b">
+      <span class="h1-b-white">SaaS copy that</span><br>
+      <span class="h1-b-grad">actually converts</span>
+    </h1>
+    <p class="sub-b">The AI copywriter trained on SaaS. Writes landing pages, email sequences, LinkedIn posts, and more — in your brand voice, for your audience.</p>
+
+    <div class="input-row-b">
+      <input class="input-b" type="email" placeholder="you@yourcompany.com">
+      <button class="btn-b">Get early access →</button>
+    </div>
+    <div class="hint-b">Free during beta · No credit card required</div>
+
+    <div class="use-cases-b">
+      <div class="uc-b">
+        <div class="uc-icon-b">⚡</div>
+        <div class="uc-title-b">Hero copy</div>
+        <div class="uc-desc-b">Headlines and sub-copy that stop the scroll</div>
+      </div>
+      <div class="uc-b">
+        <div class="uc-icon-b">✉️</div>
+        <div class="uc-title-b">Email sequences</div>
+        <div class="uc-desc-b">Onboarding, nurture, and reactivation flows</div>
+      </div>
+      <div class="uc-b">
+        <div class="uc-icon-b">💼</div>
+        <div class="uc-title-b">LinkedIn posts</div>
+        <div class="uc-desc-b">Thought leadership that builds pipeline</div>
+      </div>
+      <div class="uc-b">
+        <div class="uc-icon-b">📖</div>
+        <div class="uc-title-b">Case studies</div>
+        <div class="uc-desc-b">Customer stories that close deals</div>
+      </div>
+      <div class="uc-b">
+        <div class="uc-icon-b">🎯</div>
+        <div class="uc-title-b">Ad copy</div>
+        <div class="uc-desc-b">Google, LinkedIn, Meta — optimized for clicks</div>
+      </div>
+      <div class="uc-b">
+        <div class="uc-icon-b">📝</div>
+        <div class="uc-title-b">Blog & SEO</div>
+        <div class="uc-desc-b">Content that ranks and converts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ DIRECTION C: LIQUID OBSIDIAN ═══════════════ -->
+<section id="dir-c">
+  <div class="dir-label">Direction C — Liquid Obsidian &nbsp;·&nbsp; Pure black · Acid green · Precision output</div>
+
+  <div class="glass-c">
+    <div class="c-split">
+      <div class="c-left">
+        <div class="badge-c">● Live</div>
+        <h1 class="h1-c">AI copywriter.<br>Built for <em>SaaS</em>.</h1>
+        <p class="sub-c">Not another generic AI writer. SaaSWriter understands PLG, SLG, conversion copy, and the language your SaaS buyers actually use.</p>
+        <button class="btn-c">Get early access</button>
+        <button class="btn-ghost-c">See it write →</button>
+
+        <div class="metrics-c" style="margin-top: 40px;">
+          <div class="metric-c">
+            <div class="metric-num-c">12+</div>
+            <div class="metric-label-c">Content types</div>
+          </div>
+          <div class="metric-c">
+            <div class="metric-num-c">10×</div>
+            <div class="metric-label-c">Faster than writing</div>
+          </div>
+          <div class="metric-c">
+            <div class="metric-num-c">$0</div>
+            <div class="metric-label-c">During beta</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-right">
+        <div class="terminal-c">
+          <div class="terminal-header-c">
+            <div class="terminal-dot-c" style="background:#ff5f56"></div>
+            <div class="terminal-dot-c" style="background:#febc2e"></div>
+            <div class="terminal-dot-c" style="background:#27c93f"></div>
+            <span style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.2)">saaswriter · hero copy</span>
+          </div>
+          <div class="terminal-body-c">
+            <div class="t-prompt">▸ generating hero copy for: LinearB</div>
+            <div class="t-label">Headline</div>
+            <div class="t-copy">Ship 40% Faster Without the Burnout<span class="cursor-a"></span></div>
+            <div class="t-label">Subheadline</div>
+            <div class="t-copy">LinearB gives engineering teams the metrics they need to improve velocity without micromanagement. See exactly where work is slowing down — and fix it before it becomes a miss.</div>
+            <div class="t-label">CTA</div>
+            <div class="t-copy">Start free → No credit card</div>
+            <div class="t-meta">
+              <span class="t-tag green">✓ SaaS-optimized</span>
+              <span class="t-tag">Pain-first</span>
+              <span class="t-tag">B2B</span>
+              <span class="t-tag">PLG motion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Nav active state on scroll
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  links.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

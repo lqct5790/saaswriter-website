@@ -1,0 +1,614 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const contentTypes = [
+  'landing_pages',
+  'email_sequences',
+  'linkedin_posts',
+  'case_studies',
+  'ad_copy',
+  'blog_posts',
+  'changelogs',
+  'onboarding_copy',
+];
+
+const steps = [
+  {
+    num: '01 —',
+    title: 'Pick your content type',
+    desc: 'Choose from 12+ content types built for SaaS — hero copy, email sequences, case studies, ads, and more.',
+    tag: '12+ types',
+  },
+  {
+    num: '02 —',
+    title: 'Brief your product',
+    desc: 'Tell us your product, audience, motion (PLG/SLG), and tone. The agent handles the rest — no prompt engineering needed.',
+    tag: 'SaaS-native context',
+  },
+  {
+    num: '03 —',
+    title: 'Get copy that converts',
+    desc: 'Receive multiple variants, quality-scored against SaaS conversion frameworks. Copy, edit, ship.',
+    tag: 'Variants + scores',
+  },
+];
+
+const differentiators = [
+  {
+    icon: '🎯',
+    title: 'Knows PLG vs SLG',
+    desc: 'Understands the difference between product-led and sales-led copy — and writes accordingly. No more &ldquo;Book a demo&rdquo; on a self-serve tool.',
+    bad: 'Generic AI',
+    good: 'Motion-aware copy',
+  },
+  {
+    icon: '💬',
+    title: 'Speaks SaaS buyer language',
+    desc: 'Trained on the terms, pains, and objections real SaaS buyers have. No filler phrases, no corporate speak.',
+    bad: 'Robotic output',
+    good: 'Sounds like you',
+  },
+  {
+    icon: '⚡',
+    title: 'Pain-first frameworks',
+    desc: "Every piece of copy leads with the buyer's pain, not your features. Proven conversion frameworks baked in — not prompts you have to find yourself.",
+    bad: 'Feature-first copy',
+    good: 'Pain-first structure',
+  },
+  {
+    icon: '🔁',
+    title: 'Full content system',
+    desc: 'One tool for your entire SaaS content stack. Landing pages, emails, LinkedIn, ads, case studies — consistent voice across all channels.',
+    bad: '12 different tools',
+    good: 'One system',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Finally an AI that doesn't write copy that sounds like a corporate press release. The PLG/SLG awareness alone is worth it.",
+    initials: 'AK',
+    name: 'Alex K.',
+    role: 'Head of Marketing · Series B SaaS',
+  },
+  {
+    quote:
+      "I used to spend half a day on a single email sequence. Now it's 20 minutes — and I'm actually editing, not rewriting from scratch.",
+    initials: 'SR',
+    name: 'Sara R.',
+    role: 'Content Lead · PLG startup',
+  },
+  {
+    quote:
+      "As a solo founder doing my own marketing, this is like having a senior copywriter on retainer. Except it doesn't cost $300/hr.",
+    initials: 'JM',
+    name: 'James M.',
+    role: 'Founder · B2B SaaS',
+  },
+];
+
+const logos = ['Acme', 'Lumio', 'Forge', 'Clearpath', 'Vela', 'Stealth'];
+
+const sidebarItems = [
+  { icon: '🏠', label: 'Hero copy', active: true },
+  { icon: '✉️', label: 'Email sequence', active: false },
+  { icon: '💼', label: 'LinkedIn post', active: false },
+  { icon: '📖', label: 'Case study', active: false },
+  { icon: '🎯', label: 'Ad copy', active: false },
+];
+
+const qualityScores = [
+  { label: 'SaaS-native', score: 92, fill: '92%' },
+  { label: 'Pain-first', score: 78, fill: '78%' },
+  { label: 'Specificity', score: 61, fill: '61%' },
+];
+---
+
+<BaseLayout>
+  <Header />
+
+  <main>
+    <!-- ─── HERO ─────────────────────────────────────────── -->
+    <section
+      id="hero"
+      class="relative z-10 pt-[140px] pb-20 px-6 flex flex-col items-center text-center"
+    >
+      <!-- Badge -->
+      <div
+        class="inline-flex items-center gap-2 bg-green-dim border border-green-border
+               rounded-full px-4 py-[5px] font-mono text-xs text-green tracking-[0.04em]
+               mb-9"
+        data-animate
+      >
+        <span
+          class="w-1.5 h-1.5 rounded-full bg-green animate-pulse-dot"
+          style="box-shadow: 0 0 6px #4ade80;"
+          aria-hidden="true"
+        ></span>
+        Early access · Free during beta
+      </div>
+
+      <!-- Headline -->
+      <h1
+        class="font-display font-extrabold text-hero text-white max-w-hero-text mb-6"
+        data-animate
+        data-delay="80"
+      >
+        The AI copywriter<br />built for <em class="not-italic text-green">SaaS</em>
+      </h1>
+
+      <!-- Sub -->
+      <p
+        class="text-body-lg text-white-40 max-w-hero-sub mb-12"
+        data-animate
+        data-delay="140"
+      >
+        Stop getting generic output from generic AI. SaaSWriter knows how SaaS buyers think,
+        how SaaS products sell, and what makes SaaS copy convert.
+      </p>
+
+      <!-- Email CTA -->
+      <form
+        id="hero-cta"
+        class="flex w-full max-w-cta-input bg-surface border border-white-10
+               rounded-[10px] overflow-hidden mb-3.5 transition-shadow duration-200
+               focus-within:shadow-green-focus"
+        onsubmit="return false"
+        aria-label="Get early access"
+        data-animate
+        data-delay="200"
+      >
+        <label for="hero-email" class="sr-only">Your work email</label>
+        <input
+          id="hero-email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@yourcompany.com"
+          required
+          class="flex-1 bg-transparent border-none outline-none px-[18px] py-3.5
+                 text-sm text-white placeholder:text-white-20 font-sans"
+        />
+        <button
+          type="submit"
+          class="bg-green text-black font-bold text-[13px] px-[22px] py-3.5
+                 hover:bg-green-hover transition-colors duration-150 whitespace-nowrap"
+        >
+          Get access →
+        </button>
+      </form>
+
+      <p class="font-mono text-[11px] text-white-20 mb-12" data-animate data-delay="240">
+        // free_during_beta · no_card_required
+      </p>
+
+      <!-- Content type pills -->
+      <div
+        class="flex gap-2 flex-wrap justify-center max-w-xl"
+        data-animate
+        data-delay="300"
+      >
+        {
+          contentTypes.map((type) => (
+            <span
+              class="bg-white-4 border border-border rounded-[6px] px-3 py-1.5
+                     font-mono text-xs text-white-40 hover:bg-green-dim hover:border-green-border
+                     hover:text-green transition-all duration-150 cursor-default"
+            >
+              {type}
+            </span>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ─── PRODUCT MOCKUP ────────────────────────────────── -->
+    <section class="relative z-10 px-6 pb-28" aria-label="Product preview">
+      <div class="max-w-mockup mx-auto relative">
+        <!-- Glow under mockup -->
+        <div
+          class="absolute -bottom-10 left-[10%] right-[10%] h-24 pointer-events-none"
+          style="background: radial-gradient(ellipse, rgba(74,222,128,0.12) 0%, transparent 70%); filter: blur(20px);"
+          aria-hidden="true"
+        ></div>
+
+        <!-- Browser frame -->
+        <div
+          class="bg-surface border border-border rounded-mockup overflow-hidden shadow-mockup"
+          data-animate
+        >
+          <!-- Chrome bar -->
+          <div class="bg-surface-2 border-b border-border px-4 py-3 flex items-center gap-2.5">
+            <div class="flex gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#febc2e]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></span>
+            </div>
+            <div
+              class="flex-1 flex justify-center"
+            >
+              <div
+                class="flex items-center gap-1.5 bg-white-4 border border-border rounded-md
+                       px-3 py-1 font-mono text-[11px] text-white-20 max-w-[240px] w-full"
+              >
+                <span class="text-green text-[10px]">🔒</span>
+                app.saaswriter.app
+              </div>
+            </div>
+          </div>
+
+          <!-- App shell: sidebar + main + panel -->
+          <div class="grid" style="grid-template-columns: 190px 1fr 260px; min-height: 400px;">
+            <!-- Sidebar -->
+            <div class="bg-surface-2 border-r border-border p-4 hidden md:block">
+              <p class="font-mono text-[9px] text-white-20 uppercase tracking-[0.12em] mb-2 px-1.5">
+                Content type
+              </p>
+              {
+                sidebarItems.map(({ icon, label, active }) => (
+                  <div
+                    class:list={[
+                      'flex items-center gap-2 px-2 py-[7px] rounded-md text-xs mb-0.5 cursor-pointer transition-all duration-150',
+                      active
+                        ? 'bg-green-dim border border-green-border text-green'
+                        : 'text-white-40 hover:bg-white-4 hover:text-white-60',
+                    ]}
+                  >
+                    <span class="text-xs opacity-70">{icon}</span>
+                    {label}
+                  </div>
+                ))
+              }
+              <div class="h-px bg-border my-3"></div>
+              <p class="font-mono text-[9px] text-white-20 uppercase tracking-[0.12em] mb-2 px-1.5">
+                Recent
+              </p>
+              <div class="flex items-center gap-2 px-2 py-[7px] text-xs text-white-40">
+                <span class="opacity-40">↩</span> Drip email #3
+              </div>
+              <div class="flex items-center gap-2 px-2 py-[7px] text-xs text-white-40">
+                <span class="opacity-40">↩</span> G2 review ask
+              </div>
+            </div>
+
+            <!-- Editor -->
+            <div class="p-6 md:p-7">
+              <div class="flex items-center justify-between mb-5">
+                <div class="font-mono text-[11px] text-white-20 flex items-center gap-1.5">
+                  Hero copy <span class="text-white-40">›</span> LinearB
+                </div>
+                <div class="flex gap-2">
+                  <button class="bg-white-4 border border-border rounded px-2.5 py-1 font-mono text-[11px] text-white-40 hover:text-white-60 transition-colors">Regenerate</button>
+                  <button class="bg-white-4 border border-border rounded px-2.5 py-1 font-mono text-[11px] text-white-40 hover:text-white-60 transition-colors">Variants</button>
+                  <button class="bg-green-dim border border-green-border rounded px-2.5 py-1 font-mono text-[11px] text-green">Copy ↗</button>
+                </div>
+              </div>
+
+              <!-- Headline block -->
+              <div class="mb-5">
+                <p class="font-mono text-[9px] text-white-20 uppercase tracking-[0.12em] mb-1.5">Headline</p>
+                <p class="font-display font-extrabold text-xl text-white tracking-tight leading-tight">
+                  Ship 40% Faster Without the Burnout<span
+                    class="inline-block w-0.5 h-5 bg-green align-middle ml-0.5 animate-blink"
+                    style="box-shadow: 0 0 6px #4ade80;"
+                    aria-hidden="true"
+                  ></span>
+                </p>
+              </div>
+
+              <!-- Sub block -->
+              <div class="mb-5">
+                <p class="font-mono text-[9px] text-white-20 uppercase tracking-[0.12em] mb-1.5">Subheadline</p>
+                <p class="text-sm text-white-40 leading-relaxed">
+                  LinearB gives engineering teams the metrics to improve velocity without
+                  micromanagement. See exactly where work is slowing down — and fix it before
+                  the sprint becomes a miss.
+                </p>
+              </div>
+
+              <!-- CTA block -->
+              <div>
+                <p class="font-mono text-[9px] text-white-20 uppercase tracking-[0.12em] mb-2">CTA</p>
+                <span
+                  class="inline-flex items-center gap-1.5 bg-green text-black rounded-md
+                         px-3.5 py-1.5 text-xs font-bold"
+                >
+                  Start free →
+                </span>
+                <span
+                  class="inline-flex items-center bg-transparent text-white-40 border
+                         border-border rounded-md px-3.5 py-1.5 text-xs ml-2"
+                >
+                  No credit card required
+                </span>
+              </div>
+            </div>
+
+            <!-- Config panel -->
+            <div class="bg-surface-2 border-l border-border p-4 hidden lg:block">
+              <p class="font-mono text-[10px] text-white-20 uppercase tracking-[0.1em] mb-4">
+                Copy config
+              </p>
+
+              <div class="mb-3.5">
+                <p class="text-[11px] text-white-40 mb-1.5">Product</p>
+                <div class="bg-white-4 border border-border rounded px-2.5 py-1.5 text-xs text-white-60">LinearB</div>
+              </div>
+              <div class="mb-3.5">
+                <p class="text-[11px] text-white-40 mb-1.5">Motion</p>
+                <div class="bg-white-4 border border-border rounded px-2.5 py-1.5 text-xs text-green flex justify-between">PLG — product-led <span>›</span></div>
+              </div>
+              <div class="mb-3.5">
+                <p class="text-[11px] text-white-40 mb-1.5">Audience</p>
+                <div class="bg-white-4 border border-border rounded px-2.5 py-1.5 text-xs text-green flex justify-between">Engineering leaders <span>›</span></div>
+              </div>
+              <div class="mb-3.5">
+                <p class="text-[11px] text-white-40 mb-1.5">Tone</p>
+                <div class="bg-white-4 border border-border rounded px-2.5 py-1.5 text-xs text-green flex justify-between">Direct · Confident <span>›</span></div>
+              </div>
+
+              <div class="h-px bg-border my-4"></div>
+
+              <p class="font-mono text-[10px] text-white-20 uppercase tracking-[0.1em] mb-3">
+                Quality signals
+              </p>
+
+              {
+                qualityScores.map(({ label, score, fill }) => (
+                  <div class="mb-2">
+                    <div class="flex justify-between items-center mb-1">
+                      <span class="text-[11px] text-white-40">{label}</span>
+                      <span
+                        class:list={[
+                          'font-mono text-[10px] px-1.5 py-0.5 rounded-sm border',
+                          score >= 75
+                            ? 'bg-green-dim text-green border-green-border'
+                            : 'bg-white-4 text-white-40 border-border',
+                        ]}
+                      >
+                        {score}
+                      </span>
+                    </div>
+                    <div class="h-[3px] bg-white-6 rounded-full overflow-hidden">
+                      <div
+                        class:list={[
+                          'h-full rounded-full',
+                          score >= 75 ? 'bg-green' : 'opacity-30 bg-green',
+                        ]}
+                        style={`width: ${fill};`}
+                      ></div>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── TRUST BAR ─────────────────────────────────────── -->
+    <div class="relative z-10 border-y border-border py-10 px-6 text-center"
+      style="background: linear-gradient(180deg, transparent, rgba(74,222,128,0.015), transparent);">
+      <p class="font-mono text-[11px] text-white-20 uppercase tracking-[0.1em] mb-6">
+        Trusted by teams building SaaS
+      </p>
+      <div class="flex gap-8 md:gap-12 justify-center items-center flex-wrap" aria-label="Customer logos">
+        {
+          logos.map((name) => (
+            <span class="font-display font-extrabold text-[15px] text-white-20 tracking-tight hover:text-white-40 transition-colors cursor-default">
+              {name}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
+    <section
+      id="how-it-works"
+      class="relative z-10 max-w-content mx-auto px-6 py-24 md:py-28"
+      aria-labelledby="how-title"
+    >
+      <p class="font-mono text-[11px] text-green uppercase tracking-[0.12em] mb-4" data-animate>
+        // How it works
+      </p>
+      <h2
+        id="how-title"
+        class="font-display font-extrabold text-section text-white mb-3.5"
+        data-animate
+        data-delay="60"
+      >
+        From brief to copy<br />in three steps
+      </h2>
+      <p class="text-base text-white-40 leading-relaxed max-w-[460px] mb-14" data-animate data-delay="120">
+        No prompting, no fiddling. Tell SaaSWriter what you need and get copy ready to ship.
+      </p>
+
+      <div
+        class="grid md:grid-cols-3 gap-px bg-border rounded-[14px] overflow-hidden"
+        data-animate
+        data-delay="180"
+      >
+        {
+          steps.map(({ num, title, desc, tag }) => (
+            <div class="bg-surface p-8 md:p-9">
+              <p class="font-mono text-[11px] text-green tracking-[0.1em] mb-5">{num}</p>
+              <h3 class="font-display font-extrabold text-[18px] text-white tracking-tight mb-2.5 leading-snug">
+                {title}
+              </h3>
+              <p class="text-sm text-white-40 leading-relaxed">{desc}</p>
+              <span
+                class="inline-block mt-4 font-mono text-[11px] text-green bg-green-dim
+                       border border-green-border rounded px-2 py-0.5"
+              >
+                {tag}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ─── DIFFERENTIATORS ───────────────────────────────── -->
+    <section
+      id="features"
+      class="relative z-10 max-w-content mx-auto px-6 pb-24 md:pb-28"
+      aria-labelledby="features-title"
+    >
+      <p class="font-mono text-[11px] text-green uppercase tracking-[0.12em] mb-4" data-animate>
+        // Why SaaSWriter
+      </p>
+      <h2
+        id="features-title"
+        class="font-display font-extrabold text-section text-white mb-3.5"
+        data-animate
+        data-delay="60"
+      >
+        Built for SaaS.<br />Not everything.
+      </h2>
+      <p class="text-base text-white-40 leading-relaxed max-w-[460px] mb-14" data-animate data-delay="120">
+        Generic AI writes generic copy. SaaSWriter is trained on what actually works in SaaS.
+      </p>
+
+      <div
+        class="grid md:grid-cols-2 gap-px bg-border rounded-[14px] overflow-hidden"
+        data-animate
+        data-delay="180"
+      >
+        {
+          differentiators.map(({ icon, title, desc, bad, good }) => (
+            <div class="bg-surface p-8 hover:bg-surface-2 transition-colors duration-150 group">
+              <div class="text-[22px] mb-3.5" aria-hidden="true">{icon}</div>
+              <h3 class="font-display font-extrabold text-base text-white tracking-tight mb-2">
+                {title}
+              </h3>
+              <p class="text-sm text-white-40 leading-relaxed mb-3">{desc}</p>
+              <div class="flex items-center gap-2 font-mono text-[11px]">
+                <span class="line-through text-red-400/70">{bad}</span>
+                <span class="text-white-20">→</span>
+                <span class="text-green">{good}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ─── TESTIMONIALS ──────────────────────────────────── -->
+    <section
+      class="relative z-10 max-w-content mx-auto px-6 pb-24 md:pb-28"
+      aria-labelledby="testi-title"
+    >
+      <p class="font-mono text-[11px] text-green uppercase tracking-[0.12em] mb-4" data-animate>
+        // What people say
+      </p>
+      <h2
+        id="testi-title"
+        class="font-display font-extrabold text-section text-white mb-12"
+        data-animate
+        data-delay="60"
+      >
+        Early users
+      </h2>
+
+      <div class="grid md:grid-cols-3 gap-3">
+        {
+          testimonials.map(({ quote, initials, name, role }, i) => (
+            <blockquote
+              class="bg-surface border border-border rounded-[12px] p-6
+                     hover:border-green-border transition-colors duration-150"
+              data-animate
+              data-delay={String(i * 80)}
+            >
+              <p class="text-sm text-white-60 leading-relaxed mb-5 italic">"{quote}"</p>
+              <footer class="flex items-center gap-2.5">
+                <div
+                  class="w-8 h-8 rounded-full bg-green-dim border border-green-border
+                         flex items-center justify-center font-display font-extrabold
+                         text-[13px] text-green flex-shrink-0"
+                  aria-hidden="true"
+                >
+                  {initials}
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-white">{name}</p>
+                  <p class="text-[11px] text-white-40">{role}</p>
+                </div>
+              </footer>
+            </blockquote>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ─── FINAL CTA ─────────────────────────────────────── -->
+    <section
+      id="early-access"
+      class="relative z-10 px-6 pb-24 md:pb-32 flex justify-center"
+      aria-labelledby="cta-title"
+    >
+      <div
+        class="bg-surface border border-border rounded-[20px] px-10 md:px-16 py-16 md:py-20
+               max-w-cta w-full text-center relative overflow-hidden shadow-green-card"
+        data-animate
+      >
+        <!-- Top green line -->
+        <div
+          class="absolute top-0 left-[15%] right-[15%] h-px pointer-events-none"
+          style="background: linear-gradient(90deg, transparent, rgba(74,222,128,0.5), transparent);"
+          aria-hidden="true"
+        ></div>
+        <!-- Inner glow -->
+        <div
+          class="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[200px] pointer-events-none"
+          style="background: radial-gradient(ellipse, rgba(74,222,128,0.07) 0%, transparent 70%);"
+          aria-hidden="true"
+        ></div>
+
+        <p class="font-mono text-[11px] text-green uppercase tracking-[0.12em] mb-3">
+          // Early access
+        </p>
+        <h2
+          id="cta-title"
+          class="font-display font-extrabold text-section text-white mb-3.5"
+        >
+          Start writing <em class="not-italic text-green">SaaS copy</em><br />that converts
+        </h2>
+        <p class="text-base text-white-40 leading-relaxed mb-9 max-w-[400px] mx-auto">
+          Free during beta. No credit card. Cancel any time — though you won't want to.
+        </p>
+
+        <form
+          class="flex max-w-[400px] mx-auto bg-bg border border-white-10 rounded-[10px]
+                 overflow-hidden mb-3 transition-shadow duration-200 focus-within:shadow-green-focus"
+          onsubmit="return false"
+          aria-label="Get early access"
+        >
+          <label for="cta-email" class="sr-only">Your work email</label>
+          <input
+            id="cta-email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@yourcompany.com"
+            required
+            class="flex-1 bg-transparent border-none outline-none px-4 py-3.5
+                   text-sm text-white placeholder:text-white-20 font-sans"
+          />
+          <button
+            type="submit"
+            class="bg-green text-black font-bold text-[13px] px-5 py-3.5
+                   hover:bg-green-hover transition-colors duration-150 whitespace-nowrap"
+          >
+            Get access →
+          </button>
+        </form>
+        <p class="font-mono text-[11px] text-white-20">// 500 spots remaining</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
